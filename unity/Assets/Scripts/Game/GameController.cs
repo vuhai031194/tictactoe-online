@@ -1,5 +1,3 @@
-using System;
-using Common;
 using Entity;
 using UnityEngine;
 
@@ -7,6 +5,8 @@ namespace Game
 {
     public class GameController : MonoBehaviour
     {
+        private GameState _gameState;
+        
         private PlayerTurn _playerTurn;
 
         private GridSpace[] _gridSpaces;
@@ -27,7 +27,7 @@ namespace Game
         {
             ResetBoard();
             
-            SetPlayerTurn(PlayerTurn.O);
+            SetGameState(GameState.Ready);
         }
 
         private void ResetBoard()
@@ -40,6 +40,16 @@ namespace Game
                 
                 gridSpace.SetOnClickButtonCallback(OnFinishTurn);
             }
+        }
+        
+        private void SetPlayerTurn(PlayerTurn playerTurn)
+        {
+            this._playerTurn = playerTurn;
+        }
+        
+        private void SetGameState(GameState gameState)
+        {
+            this._gameState = gameState;
         }
 
         private void OnFinishTurn()
@@ -97,11 +107,6 @@ namespace Game
             }
 
             return false;
-        }
-
-        public void SetPlayerTurn(PlayerTurn playerTurn)
-        {
-            this._playerTurn = playerTurn;
         }
 
         public PlayerTurn GetCurrentPlayerTurn()
